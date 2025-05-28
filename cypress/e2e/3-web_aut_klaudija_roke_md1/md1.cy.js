@@ -1,7 +1,9 @@
+import { SelectablePage } from "../pageObjects/SelectablePage";
+
 describe("Selectable Grid Test", () => {
   beforeEach(() => {
-    cy.visit("https://demoqa.com/selectable");
-    cy.contains("Grid").click();
+    SelectablePage.visit();
+    SelectablePage.clickGridTab();
   });
 
   it("highlighting even numbers", () => {
@@ -9,15 +11,15 @@ describe("Selectable Grid Test", () => {
     const notSelected = ["One", "Three", "Five", "Seven", "Nine"];
 
     toSelect.forEach(item => {
-      cy.contains(".list-group-item", item).click();
+      SelectablePage.clickItem(item);
     });
 
     toSelect.forEach(item => {
-      cy.contains(".list-group-item", item).should("have.class", "active");
+      SelectablePage.shouldBeActive(item);
     });
 
     notSelected.forEach(item => {
-      cy.contains(".list-group-item", item).should("not.have.class", "active");
+      SelectablePage.shouldNotBeActive(item);
     });
   });
 });
